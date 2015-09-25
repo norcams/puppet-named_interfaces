@@ -3,10 +3,10 @@
 # This module creates a YAML file /etc/facter/facts.d/named_interfaces.yaml
 # to provide a custom fact $named_interfaces
 #
-# The module ships with additional code that creates additional facts based on
-# the named interfaces you configure. This allows you to use abstract interface
-# names in Puppet code and Hiera data so that e.g switching interfaces or IP
-# addresses are easier.
+# The module will also create additional facts based on the named interfaces
+# you configure. This allows you to use abstract interface names in Puppet
+# code and Hiera data so that e.g switching interfaces or IP addresses are
+# easier.
 #
 # === Parameters
 #
