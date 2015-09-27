@@ -8,14 +8,9 @@ if Facter.value(:named_interfaces)
       # set up interface aliases for these facts
       facts = %w(ipaddress macaddress mtu netmask network)
       facts.each do |fact|
-        if Facter.value("#{fact}_#{iface}")
-          # Add a new fact using key and index as interface
-          # The fact value is copied from the original interface
-          Facter.add("#{fact}_#{key}#{index}") do
-            setcode do
-              Facter.value("#{fact}_#{iface}")
-            end
-          end
+        Facter.add("#{fact}_#{key}#{index}") do
+          confine { !Facter.value("#{fact}_#{iface}").nil? }
+          setcode { Facter.value("#{fact}_#{iface}") }
         end
       end
 
