@@ -41,14 +41,14 @@ Interface aliases are indexed starting from 1. The same logic as above will appl
 ### What named_interfaces affects
 
 * By default, the module will create and manage the `/etc/facter` and `/etc/facter/facts.d` folders.
-* On the first run, a structured external fact $named_interfaces is created as /etc/facter/facts.d/named_interfaces.yaml
+* On the first run, a structured external fact `$named_interfaces` is created as `/etc/facter/facts.d/named_interfaces.yaml`
 * If pluginsync is enabled, additional aliased facts will be available for the next run.
 
 ### Setup requirements
 
 Pluginsync needs to be enabled for the custom facts to become available.
 
-To enable using a Hiera deep merged config hash for this module, create a hash key `named_interfaces:` in your Hiera configuration. This key will be used if no data is found during automatic priority lookup of `named_interfaces::config`
+To enable using a Hiera deep merged config hash for this module, create a `named_interfaces` hash key in your Hiera configuration. This key will be used if no data is found during automatic priority lookup of `named_interfaces::config`
 
 Puppet 3.8.0 or later is required, see #limitations.
 
@@ -60,7 +60,7 @@ To start using the module, use:
 include named_interfaces
 ```
 
-To pass a config hash as a variable, not manage the facter configuration directories, in use resource-like syntax:
+To pass a config hash as a variable, not manage the facter configuration directories, and use resource-like syntax (turning off automatic Hiera lookups):
 
 ```puppet
 class { 'named_interfaces':

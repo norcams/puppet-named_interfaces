@@ -15,7 +15,9 @@ class named_interfaces::config {
     }
 
     hash_file { $named_interfaces::fact_file:
-      value    => { 'named_interfaces' => $named_interfaces::interfaces },
+      value    => {
+        'named_interfaces' => $named_interfaces::interfaces,
+      },
       provider => 'yaml',
     }
 

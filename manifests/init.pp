@@ -37,7 +37,7 @@
 #   Defaults to true.
 #
 class named_interfaces (
-  $config            = undef,
+  $config            = {},
   $facter_root       = '/etc/facter',
   $facts_d           = '/etc/facter/facts.d',
   $fact_file         = '/etc/facter/facts.d/named_interfaces.yaml',
@@ -45,10 +45,9 @@ class named_interfaces (
 ) {
   validate_bool($manage_facterdirs)
 
-  # Relying on hiera to return undef requires Puppet 3.8 or later
-  $interfaces = $config ? {
-    undef   => hiera_hash('named_interfaces', undef),
-    default => $config,
+  $interfaces = empty($config) ? {
+    false   => $config,
+    default => hiera_hash('named_interfaces', {}),
   }
 
   # validate data
