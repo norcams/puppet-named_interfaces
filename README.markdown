@@ -50,7 +50,7 @@ Pluginsync needs to be enabled for the custom facts to become available.
 
 To enable using a Hiera deep merged config hash for this module, create a `named_interfaces` hash key in your Hiera configuration. This key will be used if no data is found during automatic priority lookup of `named_interfaces::config`
 
-Puppet 3.8.0 or later is required, see #limitations.
+Developed using Puppet 3.8.x
 
 ### Usage
 
@@ -71,7 +71,5 @@ class { 'named_interfaces':
 
 ## Limitations
 
-This module relies on hiera_hash() being able to return `undef` as a value. Puppet 3.8.0 or later is required.
-
-* Support for hiera returning `undef` https://github.com/puppetlabs/puppet/commit/6b60d80
+None known.
 
