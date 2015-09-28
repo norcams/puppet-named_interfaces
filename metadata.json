@@ -1,0 +1,50 @@
+{
+  "name": "norcams-named_interfaces",
+  "version": "0.1.0",
+  "author": "norcams",
+  "summary": "Set up fact aliases for network interfaces",
+  "license": "Apache 2.0",
+  "source": "https://github.com/norcams/puppet-named_interfaces",
+  "project_page": "https://github.com/norcams/puppet-named_interfaces",
+  "issues_url": "https://github.com/norcams/puppet-named_interfaces/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },{
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },{
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04"
+      ]
+    },{
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "21",
+        "22"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.6.0"
+    },
+    {
+      "name": "fiddyspence-hash_file",
+      "version_requirement": ">= 1.0.2",
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.8"
+    }
+  ]
+}
