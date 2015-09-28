@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/norcams/puppet-named_interfaces.svg)
+
 #### Table of Contents
 
 1. [Overview](#overview)
