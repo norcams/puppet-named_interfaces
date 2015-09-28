@@ -10,7 +10,7 @@
 
 ## Overview
 
-Use abstract names for network related fact values. Map use of $ipaddress_eth1 to a higher layer in your code using the more descriptive $ipaddress_public1
+Use abstract names for network related fact values. Map use of `$ipaddress_eth1` to a higher layer in your code using the more descriptive `$ipaddress_public1`
 
 ## Module Description
 
