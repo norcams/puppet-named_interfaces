@@ -3,6 +3,12 @@ if Facter.value(:named_interfaces)
   hash = Facter.value(:named_interfaces)
 
   hash.each_pair do |key,array|
+    # create a fact that returns an array of interfaces with this key
+    Facter.add("#{key}_interfaces") do
+      confine { !array.empty? }
+      setcode { array }
+    end
+
     hash[key].each.with_index(1) do |iface, index|
       # create a fact that reference back to the original interface name
       Facter.add("interface_#{key}#{index}") do
