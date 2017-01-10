@@ -6,10 +6,10 @@ if Facter.value(:interfaces)
       ifreal = ifitem.dup
       ifitem.sub!('_', '.')
       Facter.add("ipaddress6_#{ifreal}") do
-        setcode "ip addr show dev #{ifitem} scope global |grep inet6 |grep global |cut -d / -f 1 | awk -F\' \' \'{print $NF}\'"
+        setcode "ip addr show dev #{ifitem} scope global | grep inet6 |grep global | cut -d / -f 1 | awk -F\' \' \'{print $NF}\'"
       end
       Facter.add("netmask6_#{ifreal}") do
-        setcode "ip addr show dev #{ifitem} scope global |grep inet6 |grep global |cut -d / -f 2  | cut -d \' \' -f 1"
+        setcode "ip addr show dev #{ifitem} scope global | grep inet6 |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
       end
     end
   end
