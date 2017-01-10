@@ -1,3 +1,21 @@
+# Find IPv6 related facts for selected interfaces
+if Facter.value(:interfaces)
+  ifarray = Facter.value('interfaces').split(",")
+  ifarray.each do |ifitem|
+    if !ifitem.match("ns|tap|swp")
+      ifreal = ifitem.dup
+      ifitem.sub!('_', '.')
+      Facter.add("ipaddress6_#{ifreal}") do
+        setcode "ip addr show dev #{ifitem} scope global |grep inet6 |grep global |cut -d / -f 1 | awk -F\' \' \'{print $NF}\'"
+      end
+      Facter.add("netmask6_#{ifreal}") do
+        setcode "ip addr show dev #{ifitem} scope global |grep inet6 |grep global |cut -d / -f 2  | cut -d \' \' -f 1"
+      end
+    end
+  end
+end
+
+
 # read value of named_interfaces fact
 if Facter.value(:named_interfaces)
   hash = Facter.value(:named_interfaces)
