@@ -4,12 +4,12 @@ if Facter.value(:interfaces)
   ifarray.each do |ifitem|
     if !ifitem.match("ns|tap|swp")
       ifreal = ifitem.dup
-      ifitem.sub!('_', '.')
-      Facter.add("ipaddress6_#{ifreal}") do
-        setcode "ip addr show dev #{ifitem} scope global | grep inet6 |grep global | cut -d / -f 1 | awk -F\' \' \'{print $NF}\'"
+      ifreal.sub!('_', '.')
+      Facter.add("ipaddress6_#{ifitem}") do
+        setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 1 | awk -F\' \' \'{print $NF}\'"
       end
-      Facter.add("netmask6_#{ifreal}") do
-        setcode "ip addr show dev #{ifitem} scope global | grep inet6 |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
+      Facter.add("netmask6_#{ifitem}") do
+        setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
       end
     end
   end
@@ -35,7 +35,7 @@ if Facter.value(:named_interfaces)
       end
 
       # set up interface aliases for these facts
-      facts = %w(ipaddress ipaddress6 macaddress mtu netmask network network6)
+      facts = %w(ipaddress ipaddress6 macaddress mtu netmask network netmask6)
 
       facts.each do |fact|
         Facter.add("#{fact}_#{key}#{index}") do
