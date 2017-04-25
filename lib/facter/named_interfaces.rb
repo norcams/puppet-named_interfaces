@@ -11,6 +11,9 @@ if Facter.value(:interfaces)
       Facter.add("netmask6_#{ifitem}") do
         setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
       end
+      Facter.add("cidr_#{ifitem}") do
+        setcode "ip addr show dev #{ifreal} | grep \'inet \' |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
+      end
     end
   end
 end
@@ -28,9 +31,11 @@ if Facter.value(:named_interfaces)
     end
 
     hash[key].each.with_index(1) do |iface, index|
+      modiface = iface.dup
+      modiface.sub!('.', '_')
       # create a fact that reference back to the original interface name
       Facter.add("interface_#{key}#{index}") do
-        confine { Facter.value(:interfaces).split(',').include? iface }
+        confine { Facter.value(:interfaces).split(',').include? modiface }
         setcode { iface }
       end
 
@@ -39,8 +44,8 @@ if Facter.value(:named_interfaces)
 
       facts.each do |fact|
         Facter.add("#{fact}_#{key}#{index}") do
-          confine { !Facter.value("#{fact}_#{iface}").nil? }
-          setcode { Facter.value("#{fact}_#{iface}") }
+          confine { !Facter.value("#{fact}_#{modiface}").nil? }
+          setcode { Facter.value("#{fact}_#{modiface}") }
         end
       end
     end
