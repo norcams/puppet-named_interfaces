@@ -1,4 +1,7 @@
-# Find IPv6 related facts for selected interfaces
+# Find IPv6 related facts and CIDR for selected interfaces
+
+ossystem = `uname -a | cut -d \' \' -f 1 | tr -d \'[:space:]\'`
+
 if Facter.value(:interfaces)
   ifarray = Facter.value('interfaces').split(",")
   ifarray.each do |ifitem|
@@ -11,8 +14,14 @@ if Facter.value(:interfaces)
       Facter.add("netmask6_#{ifitem}") do
         setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
       end
-      Facter.add("cidr_#{ifitem}") do
-        setcode "ip addr show dev #{ifreal} | grep \'inet \' |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
+      if ossystem == "Linux"
+        Facter.add("cidr_#{ifitem}") do
+          setcode "ip addr show dev #{ifreal} | grep \'inet \' |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
+        end
+      elsif ossystem == "FreeBSD"
+        Facter.add("cidr_#{ifitem}") do
+          setcode "ifconfig -f inet:cidr vtnet0 | grep \'inet \' | cut -d / -f 2 | cut -d \' \' -f 1"
+        end
       end
     end
   end
