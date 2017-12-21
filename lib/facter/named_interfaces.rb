@@ -7,7 +7,7 @@ if Facter.value(:interfaces)
   ifarray.each do |ifitem|
     if !ifitem.match("ns|tap|swp")
       ifreal = ifitem.dup
-      ifreal.sub!('_', '.')
+      # ifreal.sub!('_', '.')
       Facter.add("ipaddress6_#{ifitem}") do
         setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 1 | awk -F\' \' \'{print $NF}\'"
       end
@@ -41,7 +41,7 @@ if Facter.value(:named_interfaces)
 
     hash[key].each.with_index(1) do |iface, index|
       modiface = iface.dup
-      modiface.sub!('.', '_')
+      # modiface.sub!('.', '_')
       # create a fact that reference back to the original interface name
       Facter.add("interface_#{key}#{index}") do
         confine { Facter.value(:interfaces).split(',').include? modiface }
