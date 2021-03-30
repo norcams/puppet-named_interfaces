@@ -43,7 +43,7 @@ class named_interfaces (
   $fact_file         = '/etc/facter/facts.d/named_interfaces.yaml',
   $manage_facterdirs = true,
 ) {
-  validate_bool($manage_facterdirs)
+  validate_legacy(Boolean, 'validate_bool', $manage_facterdirs)
 
   $interfaces = empty($config) ? {
     false   => $config,
@@ -51,8 +51,7 @@ class named_interfaces (
   }
 
   # validate data
-  validate_hash($interfaces)
+  validate_legacy(Hash, validate_hash, $interfaces)
 
   contain 'named_interfaces::config'
 }
-
