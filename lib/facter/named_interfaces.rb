@@ -9,14 +9,14 @@ if Facter.value(:interfaces)
       ifreal = ifitem.dup
       # ifreal.sub!('_', '.')
       Facter.add("ipaddress6_#{ifitem}") do
-        setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 1 | awk -F\' \' \'{print $NF}\'"
+        setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 1 | awk -F\' \' \'{print $NF}\' | head -n 1"
       end
       Facter.add("netmask6_#{ifitem}") do
-        setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
+        setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 2 | cut -d \' \' -f 1 | head -n 1"
       end
       if ossystem == "Linux"
         Facter.add("cidr_#{ifitem}") do
-          setcode "ip addr show dev #{ifreal} | grep \'inet \' |grep global | cut -d / -f 2 | cut -d \' \' -f 1"
+          setcode "ip addr show dev #{ifreal} | grep \'inet \' |grep global | cut -d / -f 2 | cut -d \' \' -f 1 | head -n 1"
         end
       elsif ossystem == "FreeBSD"
         Facter.add("cidr_#{ifitem}") do
