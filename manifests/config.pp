@@ -11,14 +11,13 @@ class named_interfaces::config {
               $named_interfaces::facts_d]:
         ensure => directory,
       }
-      File[$named_interfaces::facts_d] -> Hash_file[$named_interfaces::fact_file]
+      File[$named_interfaces::facts_d] -> File[$named_interfaces::fact_file]
     }
 
-    hash_file { $named_interfaces::fact_file:
-      value    => {
-        'named_interfaces' => $named_interfaces::interfaces,
-      },
-      provider => 'yaml',
+    # FIXME: change to stdlib::to_yaml for stdlib version > 8
+    file { $named_interfaces::fact_file:
+      ensure  => present,
+      content => to_yaml('named_interfaces' => $named_interfaces::interfaces),
     }
 
   }

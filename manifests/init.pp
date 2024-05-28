@@ -37,21 +37,18 @@
 #   Defaults to true.
 #
 class named_interfaces (
-  $config            = {},
-  $facter_root       = '/etc/facter',
-  $facts_d           = '/etc/facter/facts.d',
-  $fact_file         = '/etc/facter/facts.d/named_interfaces.yaml',
-  $manage_facterdirs = true,
+  Hash $config = {},
+  String $facter_root = '/etc/facter',
+  String $facts_d = '/etc/facter/facts.d',
+  String $fact_file = '/etc/facter/facts.d/named_interfaces.yaml',
+  Boolean $manage_facterdirs = true,
+  String $merge_strategy = 'first',
 ) {
-  validate_legacy(Boolean, 'validate_bool', $manage_facterdirs)
 
   $interfaces = empty($config) ? {
     false   => $config,
-    default => hiera_hash('named_interfaces', {}),
+    default => lookup('Hash', 'named_interfaces', $merge_strategy, {}),
   }
-
-  # validate data
-  validate_legacy(Hash, validate_hash, $interfaces)
 
   contain 'named_interfaces::config'
 }
