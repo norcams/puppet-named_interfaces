@@ -46,7 +46,7 @@ if Facter.value(:named_interfaces)
       end
 
       # set up interface aliases for these facts
-      facts = %w(ipaddress ipaddress6 macaddress mtu netmask network netmask6 cidr cidr6)
+      facts = %w(ipaddress ipaddress6 macaddress mtu netmask netmask6 network network6 cidr cidr6)
 
       facts.each do |fact|
         Facter.add("#{fact}_#{key}#{index}") do
