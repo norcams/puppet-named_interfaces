@@ -1,6 +1,6 @@
 {
   "name": "norcams-named_interfaces",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "author": "norcams",
   "summary": "Set up fact aliases for network interfaces",
   "license": "Apache-2.0",
