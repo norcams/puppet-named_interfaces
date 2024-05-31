@@ -1,4 +1,3 @@
-[![Build Status](https://api.travis-ci.org/norcams/puppet-named_interfaces.svg)](https://travis-ci.org/norcams/puppet-named_interfaces)
 
 #### Table of Contents
 
@@ -30,7 +29,7 @@ public:
   - eth3
 ```
 
-additional facts will be created that maps 
+additional facts will be created that maps
 
 * `$ipaddress_mgmt1` to the value of `$ipaddress_eth1` if it exists
 * `$ipaddress_public1` to the value of `$ipaddress_eth2` if it exists
