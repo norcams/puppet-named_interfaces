@@ -1,4 +1,4 @@
-# Find IPv6 related facts and CIDR for selected interfaces
+# Find CIDR for selected interfaces
 
 ossystem = `uname -a | cut -d \' \' -f 1 | tr -d \'[:space:]\'`
 
@@ -8,15 +8,12 @@ if Facter.value(:interfaces)
     if !ifitem.match("ns|tap|swp")
       ifreal = ifitem.dup
       # ifreal.sub!('_', '.')
-      Facter.add("ipaddress6_#{ifitem}") do
-        setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 1 | awk -F\' \' \'{print $NF}\' | head -n 1"
-      end
-      Facter.add("netmask6_#{ifitem}") do
-        setcode "ip addr show dev #{ifreal} scope global | grep inet6 |grep global | cut -d / -f 2 | cut -d \' \' -f 1 | head -n 1"
-      end
       if ossystem == "Linux"
         Facter.add("cidr_#{ifitem}") do
           setcode "ip addr show dev #{ifreal} | grep \'inet \' |grep global | cut -d / -f 2 | cut -d \' \' -f 1 | head -n 1"
+        end
+        Facter.add("cidr6_#{ifitem}") do
+          setcode "ip -6 addr show dev team1 | grep inet6 | grep global | cut -d / -f 2  | cut -d \' \' -f 1 | head -n 1"
         end
       elsif ossystem == "FreeBSD"
         Facter.add("cidr_#{ifitem}") do
@@ -49,7 +46,7 @@ if Facter.value(:named_interfaces)
       end
 
       # set up interface aliases for these facts
-      facts = %w(ipaddress ipaddress6 macaddress mtu netmask network netmask6 cidr)
+      facts = %w(ipaddress ipaddress6 macaddress mtu netmask netmask6 network network6 cidr cidr6)
 
       facts.each do |fact|
         Facter.add("#{fact}_#{key}#{index}") do
