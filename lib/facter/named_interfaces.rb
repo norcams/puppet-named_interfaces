@@ -13,7 +13,7 @@ if Facter.value(:interfaces)
           setcode "ip addr show dev #{ifreal} | grep \'inet \' |grep global | cut -d / -f 2 | cut -d \' \' -f 1 | head -n 1"
         end
         Facter.add("cidr6_#{ifitem}") do
-          setcode "ip -6 addr show dev team1 | grep inet6 | grep global | cut -d / -f 2  | cut -d \' \' -f 1 | head -n 1"
+          setcode "ip -6 addr show dev #{ifreal} | grep inet6 | grep global | cut -d / -f 2  | cut -d \' \' -f 1 | head -n 1"
         end
       elsif ossystem == "FreeBSD"
         Facter.add("cidr_#{ifitem}") do
